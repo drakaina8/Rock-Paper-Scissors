@@ -27,7 +27,7 @@ playGame();
      * @returns {number} - A random number between 0 and 2
      */
  function randNum() {
-    return (Math.floor(Math.random() * 4));
+    return (Math.floor(Math.random() * 3) + 1);
 }
 
 /**
@@ -35,15 +35,15 @@ playGame();
  * @returns {object} - The symbol object relative to the user submitted number
  */
 function requestSymbol(symbols){
-    let symbolNum = -1;
+    let symbolString;
+    let symbolIndex;
     do {
-        symbolNum = prompt('\nWhat symbol will you play?\n'
-                                + 'Type 1 for Rock\n'
-                                + 'Type 2 for Paper\n'
-                                + 'Type 3 for Scissors\n\n');
+        symbolString = prompt('Will you play rock, paper, or scissors? ');
+        // To identify the object with the same property as the user's string, I used code from this source: https://bobbyhadz.com/blog/javascript-array-find-index-of-object-by-property
+        symbolIndex = symbols.map(object => object.string).indexOf(symbolString);
 
-    } while (!symbols.includes(symbols[symbolNum -1]))
-    return symbols[symbolNum - 1];
+    } while (!symbols.includes(symbols[symbolIndex]))
+    return symbols[symbolIndex];
 }
 
 /**
@@ -53,7 +53,8 @@ function requestSymbol(symbols){
 function requestPlay(){
     let input;
     do {
-        input = prompt('Play again? Type y or n.\n')
+        input = prompt('Play again? Type y or n.')
+        console.log('\n');
 
     } while(input !== 'y' && input !== 'n')
 
