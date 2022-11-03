@@ -7,28 +7,31 @@ function initializeGame() {
         .addEventListener("click", () => {
             document.querySelector("#game-start").style.display = "none";
             document.querySelector("#play-hand").style.display = "block";
-            playRound();
             this.removeEventListener('click', arguments.callee)
+            playRound();
         })
 }
 
-// For hand icons eventListeners
+// function for hand icons eventListeners (Named functions are necessary for removeEventListener())
 function actionIcon(e) {
     if (playerSelection !== undefined) {
         playerSelection.style.color = "#FFFFFF";
     }
     playerSelection = e.target;
     e.target.style.color = "#FE00B7";
+    // Once the play-hand button is pressed, icon eventlisteners are removed
+    document.querySelector("#play-hand").addEventListener("click", actionPlayHand);
 }
 
-// For play-hand btn eventListener
-function actionPlayHand(e) {
+// Function for play-hand btn eventListener
+function actionPlayHand() {
     document.querySelector("#play-hand").style.display = "none";
     const choices = document.querySelectorAll('.choices');
 
     choices.forEach((choice, i, arr) => {
         choice.removeEventListener('click', actionIcon);
     });
+    this.removeEventListener('click', arguments.callee)
     gameLogic();
     restartGame();
 }
@@ -40,10 +43,9 @@ function playRound() {
         choice.addEventListener('click', actionIcon); 
     });
             
-    // Once the play-hand button is pressed, icon eventlisteners are removed
-    document.querySelector("#play-hand").addEventListener("click", actionPlayHand);
 }
 
+// Randomly selects an icon for the computer
 function computerChoice() {
     if (compSelection !== undefined) {
         compSelection.style.color = "#FFFFFF";
@@ -70,7 +72,7 @@ function gameLogic() {
     if (playerSelection.isSameNode(compSelection) && playerSelection !== undefined) { // Round Tied
         document.getElementById("hand-results").textContent = "Draw!";
         document.getElementById("win-results").textContent = "";
-        playerSelection.classList.add("tied-game"); // TODO issue?
+        playerSelection.classList.add("tied-game");
         return;
 
     } else if (playerSelection.className.includes("fist")) { 
@@ -103,6 +105,7 @@ function gameLogic() {
     updateGameText(gameResultsText, winOrLoseText);
 }
 
+// Changes text header to show game results
 function updateGameText(gameResultsText, winOrLoseText) {
     document.getElementById("hand-results").textContent = gameResultsText + ", ";
     document.getElementById("win-results").textContent = winOrLoseText;
@@ -113,24 +116,27 @@ function updateGameText(gameResultsText, winOrLoseText) {
     } 
 }
 
+// Continues gameplay, calls are bounced back and forth from playRound() and restartGame()
 function restartGame() {
     document.querySelector("#play-again").style.display = "block";
     document.querySelector("#play-again").addEventListener('click', () => {
         this.removeEventListener('click', arguments.callee)
-        // Reset global variables and page styles
+        // Reset global variables
         playerSelection = undefined;
         compSelection = undefined;
 
+        // Reset icon styles and classes
         const choices = document.querySelectorAll('.choices');
         choices.forEach((choice, i, arr) => {
             document.getElementById(arr[i].id).firstElementChild.classList.remove("tied-game");
             document.getElementById(arr[i].id).firstElementChild.style.color = "#FFFFFF";
         });
         
-
+        // Reset game text header
         document.getElementById("hand-results").textContent = "Rock, Paper, Scissors";
         document.getElementById("win-results").textContent = "";
 
+        // Change button to Play Hand
         document.querySelector("#play-again").style.display = "none";
         document.querySelector("#play-hand").style.display = "block";
         playRound();
