@@ -1,0 +1,16 @@
+{
+    "name": "rock-paper-scissors",
+    "version": "1.0.0",
+    "description": "Rock, Paper, Scissors program for WCC's Web Programming class",
+    "main": "index.html",
+    "scripts": {
+        "test": "mocha --reporter spec"
+    },
+    "author": "Hannah Hendrickson",
+    "license": "",
+    "dependencies": {
+        "chai": "^4.3.6",
+        "mocha": "^10.0.0",
+        "prompt-sync": "^4.2.0"
+    }
+}

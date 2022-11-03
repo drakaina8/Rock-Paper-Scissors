@@ -2,6 +2,13 @@ var expect = require("chai").expect;
 
 const { playGame, requestSymbol, randNum, endGame } = require('../src/rockPaperScissors.js');
 
+describe('removeEventListener test', () => {
+    it('should confirm the removeEventListener function is working', () => {
+        
+    });
+})
+
+
 describe('endGame function', () => {
     it('should return \'Player wins\' when given Rock, Scissors', () => {
         expect(endGame(1,2)).to.equal('Player wins');
