@@ -42,7 +42,6 @@ function playRound() {
             
     // Once the play-hand button is pressed, icon eventlisteners are removed
     document.querySelector("#play-hand").addEventListener("click", actionPlayHand);
-    
 }
 
 function computerChoice() {
@@ -65,7 +64,6 @@ function computerChoice() {
 }
             
 function gameLogic() {    
-    console.log('entered gameLogic');
     computerChoice();
     let gameResultsText;
     let winOrLoseText;
@@ -73,7 +71,6 @@ function gameLogic() {
         document.getElementById("hand-results").textContent = "Draw!";
         document.getElementById("win-results").textContent = "";
         playerSelection.classList.add("tied-game"); // TODO issue?
-        console.log("tied-game class added to playerSelection");
         return;
 
     } else if (playerSelection.className.includes("fist")) { 
